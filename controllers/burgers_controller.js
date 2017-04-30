@@ -1,20 +1,19 @@
 var express = require('express');
 var router = express.Router();
-var burger = require('../models/burger.js');
+var db = require('../models');
 
 //route used to populate the initial page with the burgers from the DB
 router.get('/', function(req, res) {
-	burger.selectAll(function(data) {
-		var hbsObj = {
-			burgers: data
-		};
-		res.render('index', hbsObj);
+	db.Burger.findAll({}).then(function(result) {
+		res.render('index', {burgers: result});
 	});
 });
 
 //route used to add a new burger to the db
 router.post('/', function(req, res) {
-	burger.insertOne(req.body.name, function() {
+	db.Burger.create({
+		burger_name: req.body.name
+	}).then(function(result) {
 		res.redirect('/');
 	});
 });
@@ -22,7 +21,14 @@ router.post('/', function(req, res) {
 //route used to update the devoured column
 router.put('/:id', function(req, res){
 	var id = req.params.id;
-	burger.updateOne(req.body.devoured, id, function() {
+	db.Burger.update(
+		{
+			devoured: req.body.devoured
+		}, {
+			where: {
+			id: req.params.id
+		}
+	}).then(function(result) {
 		res.redirect('/');
 	});
 });
