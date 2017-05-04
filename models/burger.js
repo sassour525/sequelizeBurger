@@ -5,6 +5,18 @@ module.exports = function(sequelize, dataTypes) {
 			type: dataTypes.BOOLEAN,
 			defaultValue: false
 		}
-	});
+	},
+		{
+			classMethods: {
+				associate: function(models) {
+					Burger.belongsTo(models.Eater, {
+						foreignKey: {
+							allowNull: true
+						}
+					});
+				}
+			}
+		}
+	);
 	return Burger;
 }

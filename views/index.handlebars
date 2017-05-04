@@ -15,11 +15,14 @@
 						<div id="burger">
 							<div class="alert alert-success" role="alert">
 								<p>{{this.id}}. {{this.burger_name}}</p>
-								<form action="/{{this.id}}?_method=PUT" method="POST">
-							      	<input type="hidden" name="devoured" value="1">
-							      	<button type="submit" class="btn btn-danger">Devour It!</button>
-								</form>
 							</div>
+															<form action="/{{this.id}}?_method=PUT" method="POST">
+							      	<input type="hidden" name="devoured" value="1">
+							      	<div class="buttons">
+								      	<input type="text" placeholder="Who ate the burger?" name="eater" id="burger-eater">
+							      		<button type="submit" id="devour-btn" class="btn btn-danger">Devour It!</button>
+							      	</div>
+								</form>
 						</div>
 					{{/unless}}
 				{{/each}}
@@ -36,7 +39,7 @@
 					{{#if devoured}}
 						<div class="alert alert-danger" role="alert">
 							<div id="devoured-burger">
-								<p>{{this.id}}. {{this.burger_name}}  <strong>*Devoured!*</strong></p>
+								<p>{{this.id}}. {{this.burger_name}}  <strong>*Devoured!*</strong> (By: {{this.Eater.eater_name}})</p>
 							</div>
 						</div>
 					{{/if}}
